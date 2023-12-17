@@ -1,0 +1,23 @@
+<div>
+  <div>
+    <h1>Nuevo deporte</h1>
+  </div>
+  <div>
+    <form action="<%= createSportUrl %>" method="post">
+      <div>
+        <label for="name">Nombre</label>
+        <input type="text" name="name" value="<%= sport.name %>" />
+      </div>
+      <div>
+        <label for="name">Jugadores por partida:</label>
+        <input type="text" name="maxPlayers" value="<%= sport.maxPlayers %>" />
+      </div>
+      <div>
+        <input type="submit" name="create" value="Crear deporte" />
+      </div>
+    </form>
+    <form action="<%= indexUrl %>" method="get">
+      <input type="submit" value="Volver" />
+    </form>
+  </div>
+</div>

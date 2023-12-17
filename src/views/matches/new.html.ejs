@@ -1,0 +1,41 @@
+<div>
+  <div>
+    <h1>Nueva Partida</h1>
+  </div>
+  <div>
+    <form class="hide-overflow inline" action="<%= createMatchUrl %>" method="post">
+      <div>
+        <input type="checkbox" name="private" <%= match.private ? 'checked' : '' %>> Privada
+      </div>
+      <div>
+        <input type="checkbox" name="requireId" <%= match.requireId ? 'checked' : '' %>> Requerir foto de carné
+      </div>
+      <div id="datetime">
+        <input type="datetime-local" name="date" required pattern="[0-9]{2}-[0-9]{2}-[0-9]{4} [0-9]{2}:[0-9]{2}" placeholder="mm-dd-yyyy hh:mm" value="<%= match.date %>">
+        <span class="validity"></span>
+      </div>
+      <div>
+        <select name="sportId">
+          <% sports.forEach(sport => { %>
+            <option value="<%= sport.id %>" <%= match.sport && match.sport.id == sport.id ? 'selected' : '' %>><%= sport.name %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div>
+        <select name="clubId">
+          <% clubs.forEach(club => { %>
+            <option value="<%= club.id %>" <%= match.club && match.club.id == club.id ? 'selected' : '' %>><%= club.name %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div>
+        <input type="submit" value="Crear Partida" />
+      </div>
+    </form>
+    <form action="<%= indexUrl %>" method="get">
+      <div>
+        <input type="submit" value="Volver" />
+      </div>
+    </form>
+  </div>
+</div>

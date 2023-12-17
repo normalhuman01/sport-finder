@@ -1,0 +1,33 @@
+<div>
+  <div>
+    <h1>Registro</h1>
+  </div>
+  <div>
+    <form action="/signup" enctype=multipart/form-data method="post">
+      <div>
+        <label>Datos de usuario</label><br>
+        <input type="text" name="username" value="<%= user.username %>" placeholder="Usuario">
+        <input type="password" name="password" placeholder="Contraseña">
+        <input type="text" name="mail" value="<%= user.mail %>" placeholder="Email">
+      </div>
+      <div>
+        <br><label>Datos personales</label><br>
+        <input type="text" name="name" value="<%= user.name %>" placeholder="Nombre">
+        <input type="text" name="surname" value="<%= user.surname %>" placeholder="Apellido">
+        <input type="text" name="pid" value="<%= user.pid %>" placeholder="RUT"><br><br>
+      </div>
+      <div>
+        <label>Foto de perfil</label><br>
+        <input type="file" name="upload"><br><br>
+      </div>
+      <div>
+        <input type="submit" name="create" value="Registrarme">
+      </div>
+    </form>
+  </div>
+  <div>
+    <form action="<%= homeUrl %>" method="get">
+        <input type="submit" value="Volver"/>
+    </form>
+  </div>
+</div>

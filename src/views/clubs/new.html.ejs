@@ -1,0 +1,25 @@
+<div>
+  <div>
+    <h1>Nuevo club</h1>
+  </div>
+  <div>
+    <form action="<%= createClubUrl %>" method="post">
+      <label for="name">Nombre</label>
+      <div>
+        <input type="text" name="name" value="<%= club.name %>" />
+      </div>
+      <label for="address">Dirección</label>
+      <div>
+        <textarea type="text" name="address"><%= club.address %></textarea>
+      </div>
+      <div>
+        <input type="submit" name="create" value="Crear club" />
+      </div>
+    </form>
+    <form action="<%= indexUrl %>" method="get">
+      <div>
+        <input type="submit" value="Volver" />
+      </div>
+    </form>
+  </div>
+</div>

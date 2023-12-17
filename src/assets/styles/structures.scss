@@ -1,0 +1,119 @@
+.table-div {
+  overflow-x: auto;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.inline {
+  display: inline;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.hide-overflow {
+  overflow: hidden;
+}
+
+button {
+  margin-top: 12px;
+  background: white;
+  font-size: 13px;
+  padding: 8px 18px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+table {
+  padding-bottom: 20px;
+}
+
+table.index {
+  width: 100%;
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  tr:hover {
+    background-color: #F8ECE0;
+  }
+  th {
+    background-color: #424242;
+    color: white;
+    font-weight: lighter;
+  }
+  th, td {
+    height: 15px;
+    text-align: left;
+    padding: 15px;
+  }
+  tr.admin {
+    @extend td;
+    background-color: #CEF6CE;
+  }
+  td.memberPicture {
+    @extend td;
+    width: 120px;
+  }
+  tr.total {
+    background-color: rgb(33, 198, 187);
+  }
+}
+
+td.actions {
+  cursor: default;
+  background-color: white;
+  border-bottom: none;
+}
+
+table.players td {
+  padding: 2px 15px;
+}
+
+div.buttons {
+  padding-top: 15px;
+}
+
+img.profilePicture {
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
+}
+
+img.memberPicture {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+div.googleMap {
+  button {
+    background-color: #084B8A;
+    color: white;
+    font-weight: lighter;
+    font-size: 14px;
+    padding: 8px 24px;
+    border: 1px solid black;
+    &:hover {
+      color: yellow;
+    }
+    &:focus {
+      background-color: green;
+    }
+  }
+  #map {
+    display: none;
+    top: 20px;
+    width:100%;
+    height:400px;
+  }
+  #status {
+    display: inline;
+  }
+}

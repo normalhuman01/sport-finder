@@ -1,0 +1,29 @@
+<div>
+  <div>
+    <h1>Club: <%= club.name %> </h1>
+    <h2>Dirección: <%= club.address %></h2>
+  </div>
+  <div id='react-club' data-club-id="<%= club.id %>" data-is-admin="<%= isAdmin %>"> </div>
+  <% if (isAdmin) { %>
+  <div class="buttons">
+    <div>
+      <a class="btn left" href="<%= editClubUrl %> ">Editar</a>
+    </div>
+    <br />
+    <br />
+    <div>
+      <form action="<%= deleteClubUrl %>" method="post">
+        <input type="hidden" name="_method" value="delete" />
+        <input class="right" type="submit" name="delete" value="Eliminar" />
+      </form>
+    </div>
+    <% } %>
+    <div>
+      <form action="<%= indexUrl %>" method="get">
+        <div class="hide-overflow">
+          <input class="left" type="submit" value="Volver" />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+<div>
+  <div>
+    <h1>Hola <%= user.username %></h1>
+    <% if (!user.confirmed) { %>
+      <h2>¡Aún debes confirmar tu cuenta!</h2>
+      <p>
+        ¿ No te llega el email ? <a href="<%= sendEmailUrl %>">Intentar nuevamente</a>
+      </p>
+    <% } %>
+  </div>
+  <div>
+    <div>
+      <h4>Datos de usuario</h4>
+      <table>
+        <tr>
+          <td>Usuario:</td>
+          <td><%= user.username %></td>
+        </tr>
+        <tr>
+          <td>Email:</td>
+          <td><%= user.mail %></td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <h4>Datos personales</h4>
+      <table>
+        <tr>
+          <td>Nombre:</td>
+          <td><%= user.name %></td>
+        </tr>
+        <tr>
+          <td>Apellido:</td>
+          <td><%= user.surname %></td>
+        </tr>
+        <tr>
+          <td>RUT:</td>
+          <td><%= user.pid %></td>
+        </tr>
+          <tr>
+            <td>Foto de perfil:</td>
+            <% if (user.photoId) { %>
+              <td><img class="profilePicture" src="<%= user.photoId %>" alt="Foto de perfil"/></td>
+            <% } else { %>
+              <td>Sube tu foto de perfil, ¡encontrarás más partidas!</td>
+            <% } %>
+          </tr>
+      </table>
+    </div>
+  </div>
+  <div class="hide-overflow">
+    <div>
+      <form action="<%= editUrl %>" method="get">
+          <input class="left" type="submit" value="Editar perfil"/>
+      </form>
+    </div>
+    <div>
+      <form action="<%= startUrl %>" method="get">
+          <input class="right" type="submit" value="Jugar"/>
+      </form>
+    </div>
+  </div>
+</div>

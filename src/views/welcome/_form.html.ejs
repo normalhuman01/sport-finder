@@ -1,0 +1,22 @@
+<form action="/signup" enctype="multipart/form-data" method="post">
+
+<!-- agregar condición para crear o editar usuario -->
+
+  <input type="hidden" name="_method" value="patch" />
+
+
+  Datos de usuario<br>
+  <input type="text" name="username" placeholder="Usuario">
+  <input type="password" name="password" placeholder="Contraseña">
+  <input type="text" name="mail" placeholder="Email"><br><br>
+  Datos personales<br>
+  <input type="text" name="name" placeholder="Nombre">
+  <input type="text" name="surname" placeholder="Apellido">
+  <input type="text" name="pid" placeholder="RUT"><br><br>
+  Foto del carné de identidad<br>
+  <input type="file" name="photoId" accept=".jpg, .jpeg, .png"><br><br>
+
+<!-- agregar condición para crear o editar usuario -->
+
+  <input type="submit" value="Registrarme">
+</form>

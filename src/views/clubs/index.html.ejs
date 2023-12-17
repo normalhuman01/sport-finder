@@ -1,0 +1,17 @@
+<div>
+  <div>
+    <h1>Clubes</h1>
+  </div>
+  <div>
+    <ul>
+      <% clubs.forEach((club) => { %>
+        <li><a href="<%= clubUrl(club) %>"> <%= club.name %> </a></li>
+      <% }) %>
+    </ul>
+  </div>
+  <% if (isAdmin) { %>
+    <div>
+      <a class="btn" href="<%= newClubUrl %>"> Agregar club </a>
+    </div>
+  <% } %>
+</div>

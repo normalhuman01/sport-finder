@@ -1,0 +1,77 @@
+<div>
+  <div>
+    <h3>Modificar tu cuenta</h3>
+  </div>
+  <div>
+    <form action="<%= updateUrl %>" enctype=multipart/form-data method="post">
+      <div>
+        <label>Datos de usuario</label><br>
+        <input type="text" name="username" value="<%= user.username %>" placeholder="Usuario">
+        <input type="text" name="mail" value="<%= user.mail %>" placeholder="Email">
+      </div>
+      <div>
+        <br><label>Datos personales</label><br>
+        <input type="text" name="name" value="<%= user.name %>" placeholder="Nombre">
+        <input type="text" name="surname" value="<%= user.surname %>" placeholder="Apellido">
+        <input type="text" name="pid" value="<%= user.pid %>" placeholder="RUT"><br><br>
+      </div>
+      <div>
+        <label>Foto de perfil</label><br>
+        <input type="file" name="upload"><br><br>
+      </div>
+      <div>
+        <input class="left" type="submit" value="Actualizar">
+      </div>
+    </form>
+  </div>
+  <div id="confirmDeletion" class="modal">
+    <div class="modal-content hide-overflow">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        ¿Estás seguro de eliminar tu cuenta?
+      </div>
+      <div class="modal-body">
+        <p>Esta acción no es reversible.</p>
+        <div>
+          <button class="left cancel">Cancelar</button>
+          <form action="<%= deleteUrl %>" method="post">
+            <input type="hidden" name="_method" value="delete" />
+            <input class="right danger" type="submit" value="Eliminar cuenta" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <br />
+  <div>
+    <button id="deleteButton" class="right">Eliminar</button>
+  </div>
+  <div>
+    <form action="<%= profileUrl %>" method="get">
+      <input type="submit" value="Volver"/>
+    </form>
+  </div>
+</div>
+<script>
+  var modal = document.getElementById("confirmDeletion");
+  var deleteButton = document.getElementById("deleteButton");
+  var span = document.getElementsByClassName("close")[0];
+  var cancelButton = document.getElementsByClassName("cancel")[0];
+
+  deleteButton.onclick = function() {
+    modal.style.display = "block";
+  }
+  cancelButton.onclick = function() {
+    modal.style.display = "none";
+  }
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      console.log("hola")
+      modal.style.display = "none";
+    }
+  }
+</script>

@@ -1,0 +1,41 @@
+<div>
+  <div>
+    <h1>Usuarios</h1>
+  </div>
+  <div class="table-div">
+    <table class="index">
+      <tr>
+        <th>Usuario</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Mail</th>
+        <th>Admin</th>
+        <th>Acciones</th>
+      </tr>
+      <% users.forEach(user => { %>
+        <% const isAdmin = user.isAdmin() %>
+        <tr <%= isAdmin ? 'class=admin' : '' %>>
+          <td><%= user.username %></td>
+          <td><%= user.name %></td>
+          <td><%= user.surname %></td>
+          <td><%= user.mail %></td>
+          <% if (isAdmin) { %>
+            <td>Sí</td>
+            <td>Ninguna</td>
+          <% } else { %>
+             <td>No</td>
+             <td>
+               <form action="<%= '/admin/users/' + user.id %>" method="post">
+                 <input type="submit" value="Promover">
+               </form>
+               <form action="<%= '/admin/users/' + user.id %>" method="post">
+                 <input type="hidden" name="_method" value="delete" />
+                 <input type="submit" value="Eliminar">
+               </form>
+             </td>
+          <% } %>
+        </tr>
+      <% }) %>
+    </table>
+  </div>
+</div>

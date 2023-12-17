@@ -1,0 +1,34 @@
+<div>
+  <div>
+    <h1>Fútbol internacional</h1>
+  </div>
+  <div class="hide-overflow">
+    <table class="index">
+      <tr>
+        <th>Nombre</th>
+        <th>Inicio</th>
+        <th>Término</th>
+        <th>Partidos jugados</th>
+        <th>Partidos fijados</th>
+      </tr>
+      <% tournaments.forEach((tournament) => { %>
+        <tr class="clickable" onclick="document.location = '<%= tournamentUrl(tournament) %>';">
+          <td><%= tournament.name %></td>
+          <td><%= tournament.current_season.start_date %></td>
+          <td><%= tournament.current_season.end_date %></td>
+          <% if (tournament.season_coverage_info) { %>
+            <td><%= tournament.season_coverage_info.played %></td>
+            <td><%= tournament.season_coverage_info.scheduled %></td>
+          <% } %>
+        </tr>
+      <% }) %>
+    </table>
+    <div>
+      <form action="<%= backButtonUrl %>" method="get">
+        <div>
+          <input class="left" type="submit" value="Volver" />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

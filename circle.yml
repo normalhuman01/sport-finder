@@ -1,0 +1,23 @@
+machine:
+  environment:
+    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+  node:
+    version: 9.0.0
+
+dependencies:
+  pre:
+    - curl -o- -L https://yarnpkg.com/install.sh | bash
+  cache_directories:
+    - ~/.cache/yarn
+  override:
+    - yarn
+
+test:
+  pre:
+    - yarn lint
+
+deployment:
+  production:
+    branch: master
+    heroku:
+      appname: sportfinder-app

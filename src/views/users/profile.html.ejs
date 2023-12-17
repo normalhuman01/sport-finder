@@ -1,0 +1,82 @@
+<div>
+  <div>
+    <h1>Perfil de <%= user.username %></h1>
+  </div>
+  <div>
+    <div>
+      <h4>Datos de usuario</h4>
+      <table>
+        <tr>
+          <td>Usuario:</td>
+          <td><%= user.username %></td>
+        </tr>
+        <tr>
+          <td>Email:</td>
+          <td><%= user.mail %></td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <h4>Datos personales</h4>
+      <table>
+        <tr>
+          <td>Nombre:</td>
+          <td><%= user.name %></td>
+        </tr>
+        <tr>
+          <td>Apellido:</td>
+          <td><%= user.surname %></td>
+        </tr>
+        <tr>
+          <td>RUT:</td>
+          <td><%= user.pid %></td>
+        </tr>
+          <tr>
+            <td>Foto carné:</td>
+            <% if (user.photoId) { %>
+              <td><img class="profilePicture" src="<%= user.photoId %>" alt="Foto de perfil"/></td>
+            <% } else { %>
+              <td>No tiene</td>
+            <% } %>
+          </tr>
+      </table>
+    </div>
+    <% if (locals.stats && Object.keys(stats).length) { %>
+      <div>
+        <h4>Estadísticas</h4>
+        <table class="index">
+          <tr class="stats">
+            <th>Posición</th>
+            <th>Número de evaluaciones</th>
+            <th>Promedio</th>
+          </tr>
+          <% Object.keys(stats).forEach(position => { %>
+            <tr>
+              <td><%= position %></td>
+              <td><%= stats[position].length %></td>
+              <td><%= stats[position].reduce((tot, cur) => tot += cur) / stats[position].length %></td>
+            </tr>
+          <% }) %>
+          <% totalEvaluations = Object.keys(stats).reduce((cnv, pos) => cnv += stats[pos].length, 0) %>
+          <tr class="total">
+            <td>Total</td>
+            <td><%= totalEvaluations %></td>
+            <td><%= Object.keys(stats).reduce((cev, pos) => cev += stats[pos].reduce((tot, cur) => tot += cur), 0) / totalEvaluations %></td>
+          </tr>
+        </table>
+      </div>
+    <% } else { %>
+      <div>
+        ¡Este jugador aún no ha sido evaluado!
+      </div>
+    <% } %>
+  </div>
+  <div class="hide-overflow">
+    <div>
+      <button onclick="window.history.back()" class="left">Volver</button>
+    </div>
+    <div>
+      <button class="right" onclick="alert('Si tuvieras lentes...')">Agregar a mis amigos</button>
+    </div>
+  </div>
+</div>

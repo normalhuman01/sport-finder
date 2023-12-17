@@ -1,0 +1,68 @@
+<header>
+  <div id="logo">
+    <a href="/play"><img src="/assets/logo.png" alt="Logo" /></a>
+  </div>
+  <nav>
+    <a href="/play">Jugar</a>
+    <a href="/sports">Deportes</a>
+    <a href="/clubs">Clubes</a>
+    <a href="/teams">Equipos</a>
+    <a href="/play/enrolled">Mis partidas</a>
+    <a href="/news">Noticias</a>
+    <% if (locals.currentUser && currentUser.isAdmin()) { %>
+      <a href="/admin/users">Usuarios</a>
+    <% } %>
+  </nav>
+  <div id="user-bar">
+    <% if (locals.currentUser) { %>
+      <% if (currentUser.hasPendingEvaluations) { %>
+        <a id="evaluateLink" class="logout evaluate" href="/play/evaluate">Evaluar</a>
+      <% } %>
+      <div class="dropdown">
+        <button class="dropbtn" id="myDropdownButton" onclick="toggle()">
+          <%= currentUser.username %>
+        </button>
+        <div id='react-notifications'> </div>
+      </div>
+      <a class="logout" href="/logout">Logout</a>
+      <script>
+        <% if (locals.notifications && locals.notifications.length) { %>
+          document.getElementById("myDropdownButton").style.color = 'red'
+          <% if (locals.notifications.length === 1) { %>
+            function optimisticDelete(divId) {
+              document.getElementById(divId).style.display = 'none';
+              document.getElementById("myDropdownButton").style.color = 'white';
+            }
+          <% } else { %>
+            function optimisticDelete(divId) {
+              document.getElementById(divId).style.display = 'none';
+            }
+          <% } %>
+        <% } %>
+
+        function toggle() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+        window.onclick = function(e) {
+          if (!e.target.matches('.dropbtn')) {
+            var myDropdown = document.getElementById("myDropdown");
+              if (myDropdown.classList.contains('show')) {
+                myDropdown.classList.remove('show');
+              }
+          }
+        }
+      </script>
+    <% } %>
+  </div>
+</header>
+<script>
+blinkEval1()
+  function blinkEval1() {
+    document.getElementById('evaluateLink').style.color='rgb(5, 255, 0)'
+    setTimeout('blinkEval2()', 1000)
+  }
+  function blinkEval2() {
+    document.getElementById('evaluateLink').style.color='rgb(255, 0, 214)'
+    setTimeout('blinkEval1()', 1000)
+  }
+</script>

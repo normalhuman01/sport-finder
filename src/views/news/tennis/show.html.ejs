@@ -1,0 +1,32 @@
+<div>
+  <div>
+    <h1>Torneo: <%= tournament.tournament.name %></h1>
+    <h2>Género: <%= tournament.gender === 'men' ? 'hombres' : 'mujeres' %></h2>
+    <h2>Tipo: <%= tournament.type === 'singles' ? 'individual' : 'dobles' %></h2>
+    <h2>Inicio: <%= tournament.tournament.current_season.start_date %></h2>
+    <h2>Fin: <%= tournament.tournament.current_season.end_date %></h2>
+  </div>
+  <div class="hide-overflow">
+    <% if (tournament.groups) { %>
+      <ul>
+        <li>
+          Participantes
+          <% tournament.groups.forEach((group) => { %>
+            <table class="index">
+                <tr>
+                  <td><%= group.name %></td>
+                </tr>
+            </table>
+          <% }) %>
+        </li>
+      </ul>
+    <% } %>
+    <div>
+      <form action="<%= backButtonUrl %>" method="get">
+        <div>
+          <input class="left" type="submit" value="Volver" />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

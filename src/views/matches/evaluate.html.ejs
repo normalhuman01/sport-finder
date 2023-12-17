@@ -1,0 +1,50 @@
+<div>
+  <% if (evaluations.length) { %>
+    <div>
+      <h1> ¿Qué tan bien jugaron los otros? </h1>
+    </div>
+    <div>
+      <table class="index">
+        <% evaluations.forEach(evaluation => { %>
+          <tr>
+            <th></th>
+            <th>Nombre</th>
+            <th>Evaluar</th>
+          </tr>
+          <tr>
+            <td class="memberPicture"> <img class="memberPicture" src="<%= getPlayer(evaluation).user.photoId %>" alt="Foto"></td>
+            <td><%= getPlayer(evaluation).user.name + ' ' + getPlayer(evaluation).user.surname %></td>
+            <td>
+              <form class="rating" action="<%= evalUrl(evaluation) %>" method="post">
+                <label>
+                  <input type="radio" name="stars" value="1" onclick="this.form.submit()" />
+                  <span class="icon">★</span>
+                </label>
+                <label>
+                  <input type="radio" name="stars" value="2" onclick="this.form.submit()" />
+                  <span class="icon">★</span>
+                  <span class="icon">★</span>
+                </label>
+                <label>
+                  <input type="radio" name="stars" value="3" onclick="this.form.submit()" />
+                  <span class="icon">★</span>
+                  <span class="icon">★</span>
+                  <span class="icon">★</span>
+                </label>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </table>
+    </div>
+  <% } else { %>
+    <div>
+      Ya los evaluaste a todos ☺
+      <br />
+      <br />
+    </div>
+    <div>
+      <a class="btn" href="/play" >Volver</a>
+    </div>
+  <% } %>
+</div>

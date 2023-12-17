@@ -1,0 +1,41 @@
+<div>
+  <div>
+    <h1>Editar Partida: <%= match.id %></h1>
+  </div>
+  <div>
+    <form action="<%= updateMatchUrl %>" method="post">
+      <input type="hidden" name="_method" value="patch" />
+      <div>
+        <input type="checkbox" name="private" <%= match.private ? 'checked' : '' %>> Privada
+      </div>
+      <div>
+        <input type="checkbox" name="requireId" <%= match.requireId ? 'checked' : '' %>> Requerir foto de carné
+      </div>
+      <div id="datetime">
+        <input name="date" type="datetime-local" value="<%= match.date %>" />
+      </div>
+      <div>
+        <select name="sportId">
+          <% sports.forEach(sport => { %>
+            <option value="<%= sport.id %>" <%= match.sport && match.sport.id == sport.id ? 'selected' : '' %>><%= sport.name %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div>
+        <select name="clubId">
+          <% clubs.forEach(club => { %>
+            <option value="<%= club.id %>" <%= match.club && match.club.id == club.id ? 'selected' : '' %>><%= club.name %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div>
+        <input type="submit" value="Guardar" />
+      </div>
+    </form>
+    <form action="<%= showMatchUrl %>" method="get">
+      <div>
+        <input type="submit" value="Volver" />
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>Sportfinder</title>
+    <% if (env !== 'development') { %>
+      <link rel="stylesheet" href="/assets/styles.css">
+    <% } %>
+  </head>
+
+  <body>
+    <%- include _navbar %>
+
+    <div id="container">
+      <%- include _messages %>
+      <%- body %>
+    </div>
+
+    <script src="/assets/app.js"></script>
+    <script src="/assets/appReact.js"></script>
+  </body>
+
+</html>

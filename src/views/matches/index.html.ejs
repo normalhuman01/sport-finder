@@ -1,0 +1,61 @@
+<div>
+  <div>
+    <h1>Partidas</h1>
+    <% if (locals.errors) { %>
+      <div class="errors">
+        Necesitas arreglar los siguiente errores:
+        <ul>
+          <% errors.forEach(error => { %>
+            <li><%= error.message %></li>
+          <% }); %>
+        </ul>
+      </div>
+    <% } %>
+  </div>
+  <div>
+    <% if (matches.length > 0) { %>
+      <table class="index">
+        <tr>
+          <th>Fecha</th>
+          <th>Deporte</th>
+          <th>Club</th>
+          <th>Requiere foto</th>
+          <th>Inscritos</th>
+        </tr>
+        <% matches.forEach(match => { %>
+          <% if (!match.isOver()) { %>
+            <% alreadyIn = false %>
+            <% userMatches.forEach(userMatch => { %>
+              <% if ((userMatch.match.id == match.id) && (userMatch.user.id == user.id)) { %>
+                <% alreadyIn = true %>
+              <% } %>
+            <% }) %>
+            <tr class="clickable" onclick="document.location = '<%= matchUrl(match) %>';">
+              <td><%= match.displayDate %></td>
+              <% if (match.sport) { %>
+                <td><%= match.sport.name %></td>
+              <% } else { %>
+                <td>Por definir</td>
+              <% } %>
+              <% if (match.club) { %>
+                <td><%= match.club.name %></td>
+              <% } else { %>
+                <td>Por definir</td>
+              <% } %>
+              <td><%= match.requireId ? '✓' : '✗' %></td>
+              <td><%= match.playersCount() %> / <%= match.maxPlayers() %></td>
+              <td class="actions">
+                <form action="<%= joinMatchUrl(match) %>" method="post">
+                  <input type="submit" value= <%= match.isOver() ? 'TERMINADA' : 'Unirse' %> <%= alreadyIn || match.isFull() || !match.sport || match.isOver() ? 'disabled' : '' %>/>
+                </form>
+              </td>
+            </tr>
+          <% } %>
+        <% }) %>
+      </table>
+    <% } %>
+  </div>
+  <div>
+    <a class="btn" href="<%= newMatchUrl %>"> Crear Partida </a>
+  </div>
+</div>

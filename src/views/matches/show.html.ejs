@@ -1,0 +1,290 @@
+<div>
+  <div>
+    <h1>Partida: <%= match.id %> </h1>
+    <div>
+      <h3>Privada <%= match.private ? '✓' : '✗' %></h3>
+    </div>
+    <div>
+      <h3>Requiere foto <%= match.requireId ? '✓' : '✗' %></h3>
+    </div>
+    <% if (match.date.getTime() < new Date().getTime() && !visitMode && currentPlayer.isAdmin() && !match.sentEvaluations) { %>
+      <div>
+        <form action="<%= '/play/' +  match.id + '/send' %>" method="post">
+          <input type="submit" value="Enviar evaluaciones" />
+        </form>
+      </div>
+    <% } %>
+    <h2>Fecha: <%= match.displayDate %></h2>
+    <% if (match.sport) { %>
+      <h2>Deporte: <%= match.sport.name %></h2>
+    <% } else { %>
+      <h2>Deporte: Por definir</h2>
+    <% } %>
+    <% if (match.isOver()) { %>
+      <h2>La partida ya terminó</h2>
+    <% } %>
+    <% if (match.club) { %>
+      <h2>Club: <%= match.club.name %>, <%= match.club.address %></h2>
+      <% if (match.sport) { %>
+        <h3>Precio: <%= match.club.matchDisplay(match.sport.id) %></h3>
+      <% } %>
+      <div class="googleMap">
+        <button class="showMap" onclick="myMap()">¿Cómo llego?</button>
+        <div id="status"></div>
+        <div id="map"></div>
+      </div>
+    <% } else { %>
+      <h2>Club: Por definir </h2>
+    <% } %>
+  </div>
+  <% i = 1 %>
+  <div>
+    <h2>Inscritos:</h2>
+    <table class="players">
+      <% players.forEach(player => { %>
+        <tr>
+          <td><%= i %>.</td><% i++ %>
+          <td><a href=<%= '/users/' + player.user.id %>><%= player.user.name + ' ' + player.user.surname %></a></td>
+          <% if (visitMode) { %>
+            <!-- position column to visitor -->
+            <% if (!player.position) { %>
+              <td>(posición no definida)</td>
+            <% } else { %>
+              <td><%= player.position.name %></td>
+            <% } %>
+            <!-- admin/promote column to visitor -->
+            <% if (player.isAdmin()) { %>
+              <td>admin</td>
+            <% } else { %>
+              <td></td>
+            <% } %>
+          <% } else { %>
+            <!-- position column to member -->
+            <% if (((player.user.id) != (currentPlayer.user.id))) { %>
+              <!-- other player -->
+              <% if (!player.position) { %>
+                <td>(posición no definida)</td>
+              <% } else { %>
+                <td><%= player.position.name %></td>
+              <% } %>
+            <% } else { %>
+              <!-- to the player -->
+              <% if (match.sport) { %>
+                <td>
+                  <form action="<%= setPositionUrl(player) %>" method="post">
+                    <input type="hidden" name="_method" value="patch" />
+                    <select name="positionId" onchange="this.form.submit()">
+                      <% if (!player.position) { %>
+                        <option>Posición no definida</option>
+                      <% } %>
+                      <% match.sport.positions.forEach(position => { %>
+                        <option value="<%= position.id %>" <%= player.position && player.position.id === position.id ? 'selected' : '' %>>
+                          <%= position.name %>
+                        </option>
+                      <% }) %>
+                    </select>
+                  </form>
+                </td>
+              <% } else { %>
+                <td>(posición no definida)</td>
+              <% } %>
+            <% } %>
+            <!-- admin/promote column to player -->
+            <% if (player.isAdmin()) { %>
+              <td>admin</td>
+            <% } else if (((player.user.id) != (currentPlayer.user.id)) && (currentPlayer.isAdmin())) { %>
+              <td>
+                <form action="<%= promotePlayerUrl(player) %>" method="post">
+                  <input type="submit" value="Promover" />
+                </form>
+              </td>
+            <% } else { %>
+              <td></td>
+            <% } %>
+            <!-- leave/delete column -->
+            <% if (player.user.id === currentPlayer.user.id) { %>
+              <% if (player.isAdmin() && (match.adminsCount() === 1)) { %>
+                <td>
+                  <button id="deleteButton2" class="right">Abandonar</button>
+                </td>
+                <div id="confirmDeletion2" class="modal2">
+                  <div class="modal2-content hide-overflow">
+                    <div class="modal2-header">
+                      <span id="spanAdmin" class="close2">&times;</span>
+                      Se eliminará la partida
+                    </div>
+                    <div class="modal2-body">
+                      <p>Si no quieres que se pierda la partida, deja otro administrador.</p>
+                      <div>
+                        <button id="cancelAdmin" class="left">Cancelar</button>
+                        <form action="<%= deleteMatchUrl %>" method="post">
+                          <input type="hidden" name="_method" value="delete" />
+                          <input class="right danger" type="submit" value="Eliminar partida" />
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <script>
+                  var modal2 = document.getElementById("confirmDeletion2");
+                  var deleteButton2 = document.getElementById("deleteButton2");
+                  var span2 = document.getElementById("spanAdmin");
+                  var cancelButton2 = document.getElementById("cancelAdmin");
+
+                  deleteButton2.onclick = function() {
+                    modal2.style.display = "block";
+                  }
+                  cancelButton2.onclick = function() {
+                    modal2.style.display = "none";
+                  }
+                  span2.onclick = function() {
+                    modal2.style.display = "none";
+                  }
+                  window.onclick = function(event) {
+                    if (event.target == modal2) {
+                      modal2.style.display = "none";
+                    }
+                  }
+                </script>
+              <% } else { %>
+                <td>
+                  <form action="<%= removePlayerUrl(player) %>" method="post">
+                    <input type="hidden" name="_method" value="delete" />
+                    <input type="submit" value="Abandonar" />
+                  </form>
+                </td>
+              <% } %>
+            <% } else if ((!player.isAdmin()) && (currentPlayer.isAdmin())) { %>
+              <td>
+                <form action="<%= removePlayerUrl(player) %>" method="post">
+                  <input type="hidden" name="_method" value="delete" />
+                  <input type="submit" value="Eliminar" />
+                </form>
+              </td>
+            <% } else { %>
+              <td></td>
+            <% } %>
+          <% } %>
+        </tr>
+      <% }) %>
+    </table>
+  </div>
+  <div class="hide-overflow">
+    <% if ((currentUser.isAdmin()) || (!visitMode && currentPlayer.isAdmin())) { %>
+      <div>
+        <a class="btn left" href="<%= editMatchUrl %> ">Editar</a>
+      </div>
+      <br />
+      <br />
+      <% if (!match.isOver()) { %>
+      <div>
+        <form class="hide-overflow" action="<%= matchInvitationUrl %>" method="get">
+          <input class="left" type="submit" value="Invitar un usuario" />
+        </form>
+      </div>
+      <% } %>
+    <% } %>
+    <div>
+      <form action="<%= indexUrl %>" method="get">
+        <div>
+          <input class="left" type="submit" value="Volver" />
+        </div>
+      </form>
+    </div>
+    <% if ((currentUser.isAdmin()) || (!visitMode && currentPlayer.isAdmin())) { %>
+      <div id="confirmDeletion" class="modal">
+        <div class="modal-content hide-overflow">
+          <div class="modal-header">
+            <span class="close">&times;</span>
+            ¿Estás seguro de eliminar la partida?
+          </div>
+          <div class="modal-body">
+            <p>Se perderán todos los datos de la partida.</p>
+            <div>
+              <button class="left cancel">Cancelar</button>
+              <form action="<%= deleteMatchUrl %>" method="post">
+                <input type="hidden" name="_method" value="delete" />
+                <input class="right" type="submit" value="Eliminar partida" />
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <button id="deleteButton" class="right">Eliminar</button>
+      </div>
+    <% } %>
+  </div>
+</div>
+<% if ((currentUser.isAdmin()) || (!visitMode && currentPlayer.isAdmin())) { %>
+  <script>
+    var modal = document.getElementById("confirmDeletion");
+    var deleteButton = document.getElementById("deleteButton");
+    var span = document.getElementsByClassName("close")[0];
+    var cancelButton = document.getElementsByClassName("cancel")[0];
+
+    deleteButton.onclick = function() {
+      modal.style.display = "block";
+    }
+    cancelButton.onclick = function() {
+      modal.style.display = "none";
+    }
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
+<% } %>
+<% if (match.club) { %>
+  <script>
+    function myMap() {
+      document.getElementById('status').innerHTML = 'Cargando...';
+      document.getElementById('map').style.display = 'block';
+      var directionsService = new google.maps.DirectionsService;
+      var directionsDisplay = new google.maps.DirectionsRenderer;
+      var infoWindow = new google.maps.InfoWindow;
+      var map = new google.maps.Map(document.getElementById("map"),{
+        center:new google.maps.LatLng(-33.4726,-70.6472),
+        zoom:10,
+      });
+      directionsDisplay.setMap(map);
+      // Try HTML5 Geolocation
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          directionsService.route({
+            origin: pos,
+            destination: "<%= match.club.name %>" + " " + "<%= match.club.address %>",
+            travelMode: 'DRIVING'
+          }, function(response, status) {
+            if (status === 'OK') {
+              document.getElementById('status').innerHTML = '';
+              directionsDisplay.setDirections(response);
+            } else {
+              window.alert('Directions request failed due to ' + status);
+            }
+          });
+        }, function() {
+          handleLocationError(true, infoWindow, map.getCenter())
+        });
+      } else {
+        handleLocationError(false, infoWindow, map.getCenter())
+      }
+    }
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+      infoWindow.setPosition(pos);
+      infoWindow.setContent(browserHasGeolocation ?
+                            'Error: La geolocalización falló.' :
+                            'Error: Tu navegador no soporta geolocalización.');
+      infoWindow.open(map);
+    }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDo9QsGpyoRHjiQrtuwgNYmO98VqcIiLS8"></script>
+<% } %>

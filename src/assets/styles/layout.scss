@@ -1,0 +1,136 @@
+$sportfinder-blue: #466BBB;
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Open Sans', 'Helvetica', sans-serif;
+  padding-top: 100px;
+}
+
+header {
+  padding: 8px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 100%;
+  background-color: black;
+}
+
+#logo {
+  display: inline-block;
+  vertical-align: middle;
+  img {
+    height: 60px;
+  }
+}
+
+nav {
+  vertical-align: middle;
+  display: inline-block;
+  a {
+    display: block;
+    float: left;
+    padding: 20px;
+    color: white;
+    text-decoration: none;
+    &:hover {
+      color: #2BBEFF;
+    }
+    &:last-child {
+      border: none;
+    }
+  }
+  a.evaluate {
+    color: rgb(67, 228, 89);
+    font-size: 18px;
+  }
+  a.evaluate:hover {
+    color: #2BBEFF;
+  }
+}
+
+#user-bar {
+  @extend nav;
+  float: right;
+
+  .dropdown {
+    float: left;
+    overflow: hidden;
+  }
+
+  .dropdown .dropbtn {
+    font-size: 18px;
+    border: none;
+    outline: none;
+    color: white;
+    background-color: inherit;
+  }
+
+  .dropdown button:hover {
+    color: #2BBEFF;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 110px;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 12px;
+    z-index: 1;
+    #profile {
+      background-color: #e0bb97;
+    }
+  }
+
+  .dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+
+  .dropdown-content div:hover {
+    background-color: #ddd;
+  }
+
+  .dropdown-content #profile:hover {
+    cursor: pointer;
+    background-color: #bb7e43;
+  }
+
+  .show {
+    display: block;
+  }
+  .show-url:hover {
+    color: blue;
+    text-decoration: underline;
+  }
+}
+
+.notification {
+  border-top: solid grey 1px;
+  padding: 8px;
+}
+
+#container {
+  margin: auto;
+  width: 60%;
+  border: 3px solid $sportfinder-blue;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.logout {
+  margin-top: 1px;
+  font-size: 17px;
+}

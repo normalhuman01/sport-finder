@@ -1,0 +1,32 @@
+<div>
+  <div>
+    <h1>Tenis</h1>
+  </div>
+  <div class="hide-overflow">
+    <table class="index">
+      <tr>
+        <th>Nombre</th>
+        <th>Inicio</th>
+        <th>Término</th>
+        <th>Género</th>
+        <th>Tipo</th>
+      </tr>
+      <% tournaments.forEach((tournament) => { %>
+        <tr class="clickable" onclick="document.location = '<%= tournamentUrl(tournament) %>';">
+          <td><%= tournament.name %></td>
+          <td><%= tournament.current_season.start_date %></td>
+          <td><%= tournament.current_season.end_date %></td>
+          <td><%= tournament.gender === 'men' ? 'hombres' : 'mujeres' %></td>
+          <td><%= tournament.type === 'singles' ? 'individual' : 'dobles' %></td>
+        </tr>
+      <% }) %>
+    </table>
+    <div>
+      <form action="<%= backButtonUrl %>" method="get">
+        <div>
+          <input class="left" type="submit" value="Volver" />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

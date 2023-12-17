@@ -1,0 +1,16 @@
+<% if (locals.notice) { %>
+  <div class="notice"><%= notice %></div>
+<% } %>
+<% if (locals.warning) { %>
+  <div class="warning"><%= warning %></div>
+<% } %>
+<% if (locals.errors) { %>
+  <div class="errors">
+    Necesitas arreglar los siguiente errores:
+    <ul>
+      <% errors.forEach(error => { %>
+        <li><%= error.message %></li>
+      <% }); %>
+    </ul>
+  </div>
+<% } %>

@@ -1,0 +1,174 @@
+$sportfinder-blue: #466BBB;
+
+#login {
+  padding-bottom: 15px;
+  input[type=submit] {
+    font-size: 100%;
+    height: 40px;
+    width: 120px;
+  }
+}
+
+#signup {
+  padding-top: 15px;
+  input[type=submit] {
+    font-size: 100%;
+    height: 40px;
+    width: 120px;
+  }
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  font-size: 13.5px;
+}
+
+select {
+  margin-top: 12px;
+  height: 30px;
+  width: 140px;
+  background-color: white;
+}
+
+input[type=checkbox], input[type=datetime-local] {
+  margin-top: 12px;
+}
+
+input[type=text], input[type=password], textarea {
+  margin-top: 12px;
+  padding: 8px 12px;
+  margin: 8px 4px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+input[type=submit] {
+  margin-top: 12px;
+  background: white;
+  padding: 8px 18px;
+  font-size: 80%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  &.danger {
+    background-color: #DF0101;
+    border: #2e6da4;
+    font-size: 15px;
+    color: #fff;
+    letter-spacing: 1px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: normal;
+    border-radius: 4px;
+    line-height: 1.5;
+    text-decoration: none;
+  }
+}
+
+#datetime {
+  input:invalid + span {
+    position: relative;
+  }
+
+  input:invalid + span:after {
+    content: '✖';
+    position: absolute;
+    right: -18px;
+    margin-top: 12px;
+  }
+
+  input:valid + span {
+    position: relative;
+  }
+
+  input:valid + span:after {
+    content: '✓';
+    position: absolute;
+    right: -18px;
+    margin-top: 12px;
+  }
+}
+
+a.btn {
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background: white;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    font: 13px/100% Arial, Helvetica, sans-serif;
+    padding: 9.5px 20px;
+    -webkit-border-radius: .5em;
+    -moz-border-radius: .5em;
+    border-radius: .3em;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+
+.rating {
+  display: inline-block;
+  position: relative;
+  height: 50px;
+  line-height: 50px;
+  font-size: 50px;
+}
+
+.rating label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  cursor: pointer;
+}
+
+.rating label:last-child {
+  position: static;
+}
+
+.rating label:nth-child(1) {
+  z-index: 5;
+}
+
+.rating label:nth-child(2) {
+  z-index: 4;
+}
+
+.rating label:nth-child(3) {
+  z-index: 3;
+}
+
+.rating label:nth-child(4) {
+  z-index: 2;
+}
+
+.rating label:nth-child(5) {
+  z-index: 1;
+}
+
+.rating label input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.rating label .icon {
+  float: left;
+  color: transparent;
+}
+
+.rating label:last-child .icon {
+  color: #000;
+}
+
+.rating:not(:hover) label input:checked ~ .icon,
+.rating:hover label:hover input ~ .icon {
+  color: #09f;
+}
+
+.rating label input:focus:not(:checked) ~ .icon:last-child {
+  color: #000;
+  text-shadow: 0 0 5px #09f;
+}

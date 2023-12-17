@@ -1,0 +1,20 @@
+<div>
+  <div>
+    <h1>¡Envía una invitación a la partida!</h1>
+  </div>
+  <div>
+    <form action="<%= sendInvitationUrl %>" method="post">
+    <label for="author">De: </label>
+    <input type="text" name="author" value="<%= currentUser.username %>" disabled/>
+  </div>
+  <div>
+    <label for="name">Para: </label>
+    <input type="text" name="to"/>
+  </div>
+  <div>
+    <div>
+      <input type="submit" name="send-invitation" value="Enviar invitación" />
+    </div>
+    </form>
+  </div>
+</div>
